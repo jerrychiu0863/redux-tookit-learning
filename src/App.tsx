@@ -1,21 +1,16 @@
-import { useAppSelector, useAppDispatch } from "./hooks";
+import { useAppSelector } from "./hooks";
 import CarForm from "./components/CarForm";
 import CarList from "./components/CarList";
 import CarSearch from "./components/CarSearch";
 import CarValue from "./components/CarValue";
-import { changeName } from "./store";
+import 'bulma/css/bulma.min.css';
 
 export default function App() {
-  const dispatch = useAppDispatch()
-  const form = useAppSelector((state) => state.form)
+  const state = useAppSelector((state) => state.form)
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeName(e.target.value))
-  }
-  console.log(form)
+  console.log(state)
   return (
-    <div>
-      <input onChange={handleInputChange} />
+    <div className="container">
       <CarForm />
       <CarSearch />
       <CarList />

@@ -1,5 +1,8 @@
 export default function CarSearch() {
   return (
-    <div>CarSearch</div>
+    <div>
+
+      <input className="input" type="text" placeholder="Search car" />
+    </div>
   )
 }

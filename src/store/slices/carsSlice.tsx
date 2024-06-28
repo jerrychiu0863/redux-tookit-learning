@@ -1,20 +1,36 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type Cars = {
+export type Car = {
   name: string;
   cost: number;
   id: string;
 }
 
-const initialState: Cars[] = []
+const initialState: { searchTerm: string; cars: Car[] } = { searchTerm: '', cars: [] }
 
 const carsSlice = createSlice({
-  name: 'car',
+  name: 'cars',
   initialState,
   reducers: {
-    addCar(state, action: PayloadAction<Cars>) {
-      state.push(action.payload)
+    changeSearchTerm(state, action: PayloadAction<string>) {
+      state.searchTerm = action.payload
+    },
+    addCar(state, action: PayloadAction<{ name: string, cost: number }>) {
+      state.cars.push({
+        name: action.payload.name,
+        cost: action.payload.cost,
+        id: nanoid()
+      })
+    },
+    removeCar(state, action: PayloadAction<string>) {
+      // const index = state.cars.findIndex(car => car.id === action.payload)
+      // state.cars.splice(index, 1)
+      const updatedCars = state.cars.filter(car => car.id !== action.payload)
+      state.cars = updatedCars;
     }
   }
 })
+
+export const carsReducer = carsSlice.reducer;
+export const { changeSearchTerm, addCar, removeCar } = carsSlice.actions
