@@ -1,5 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../hooks"
-import { changeName, changeCost } from "../store"
+import { changeName, changeCost, addCar } from "../store"
+import { resetForm } from "../store/actions"
+
 
 export default function CarForm() {
   const { name, cost } = useAppSelector(state => state.form)
@@ -14,8 +16,15 @@ export default function CarForm() {
     dispatch(changeCost(carCost))
   }
 
+  const handleCarAdd = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const car = { name, cost }
+    dispatch(addCar(car))
+    dispatch(resetForm())
+  }
+
   return (
-    <form className="is-flex mb-4">
+    <form className="is-flex mb-4" onSubmit={handleCarAdd}>
       <input className="input" value={name} type="text" placeholder="name" onChange={handleNameChange} />
       <input className="input mx-3" value={cost || ''} type="number" placeholder="cost" step={1} onChange={handleCostChange} />
       <button className="button is-primary has-text-white">Add Car</button>

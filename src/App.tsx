@@ -6,9 +6,9 @@ import CarValue from "./components/CarValue";
 import 'bulma/css/bulma.min.css';
 
 export default function App() {
-  const state = useAppSelector((state) => state.form)
+  // const state = useAppSelector((state) => state.cars)
 
-  console.log(state)
+
   return (
     <div className="container">
       <CarForm />

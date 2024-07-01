@@ -1,13 +1,13 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type Car = {
+export type Data = {
   name: string;
   cost: number;
   id: string;
 }
 
-const initialState: { searchTerm: string; cars: Car[] } = { searchTerm: '', cars: [] }
+const initialState: { searchTerm: string; data: Data[] } = { searchTerm: '', data: [] }
 
 const carsSlice = createSlice({
   name: 'cars',
@@ -17,7 +17,7 @@ const carsSlice = createSlice({
       state.searchTerm = action.payload
     },
     addCar(state, action: PayloadAction<{ name: string, cost: number }>) {
-      state.cars.push({
+      state.data.push({
         name: action.payload.name,
         cost: action.payload.cost,
         id: nanoid()
@@ -26,8 +26,8 @@ const carsSlice = createSlice({
     removeCar(state, action: PayloadAction<string>) {
       // const index = state.cars.findIndex(car => car.id === action.payload)
       // state.cars.splice(index, 1)
-      const updatedCars = state.cars.filter(car => car.id !== action.payload)
-      state.cars = updatedCars;
+      const updatedCars = state.data.filter(d => d.id !== action.payload)
+      state.data = updatedCars;
     }
   }
 })

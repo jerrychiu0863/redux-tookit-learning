@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { resetForm } from '../actions'
 
 const formSlice = createSlice({
   name: 'form',
@@ -11,6 +12,12 @@ const formSlice = createSlice({
     changeCost(state, action: PayloadAction<number>) {
       state.cost = action.payload
     }
+  },
+  extraReducers(builder) {
+    builder.addCase(resetForm, (state) => {
+      state.name = '';
+      state.cost = 0;
+    })
   }
 })
 
