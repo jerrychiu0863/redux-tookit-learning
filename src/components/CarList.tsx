@@ -6,12 +6,12 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export default function CarList() {
 
-  // Memorized 
+  // Memorized result
+  // https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization
   const memorizedCars = createSelector([(state: RootState) => state.cars.data, (state: RootState) => state.cars.searchTerm], (cars, searchTerm) => {
     return cars.filter((car) => car.name.toLowerCase().includes(searchTerm.toLowerCase()))
   })
   const cars = useAppSelector(memorizedCars);
-
   // The following causes unnecessary rerenders when form value changes
   //CarList.tsx:13 Selector unknown returned a different result when called with the same parameters. This can lead to unnecessary rerenders.
   // const cars: Car[] = useAppSelector(({ cars: { data, searchTerm } }) => {
@@ -39,8 +39,8 @@ export default function CarList() {
       </li>
     )
     )
-
   }
+
   return (
     <div className="mt-3">
       <ul>

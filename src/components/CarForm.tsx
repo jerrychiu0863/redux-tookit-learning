@@ -3,6 +3,7 @@ import { changeName, changeCost, addCar } from "../store"
 
 export default function CarForm() {
   const { name, cost } = useAppSelector(state => state.form)
+
   const dispatch = useAppDispatch()
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +20,7 @@ export default function CarForm() {
     const car = { name, cost }
     dispatch(addCar(car))
   }
-
+  console.log('car form')
   return (
     <form className="is-flex mb-4" onSubmit={handleCarAdd}>
       <input className="input" value={name} type="text" placeholder="name" onChange={handleNameChange} />
