@@ -1,11 +1,23 @@
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { removeCar } from "../store";
 import type { Car } from "../store/slices/carsSlice";
+import type { RootState } from "../store";
+import { createSelector } from "@reduxjs/toolkit";
 
 export default function CarList() {
-  const cars = useAppSelector(({ cars: { searchTerm, data } }) => {
-    return data.filter(car => car.name.toLowerCase().includes(searchTerm.toLowerCase()));
-  });
+
+  // Memorized 
+  const memorizedCars = createSelector([(state: RootState) => state.cars.data, (state: RootState) => state.cars.searchTerm], (cars, searchTerm) => {
+    return cars.filter((car) => car.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  })
+  const cars = useAppSelector(memorizedCars);
+
+  // The following causes unnecessary rerenders when form value changes
+  //CarList.tsx:13 Selector unknown returned a different result when called with the same parameters. This can lead to unnecessary rerenders.
+  // const cars: Car[] = useAppSelector(({ cars: { data, searchTerm } }) => {
+  //   return data.filter(car => car.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  // });
+
   const dispatch = useAppDispatch()
 
   const handleCarRemove = (car: Car) => {
@@ -15,7 +27,7 @@ export default function CarList() {
   const renderCarList = () => {
     // const filteredData = searchTerm ? data.filter(car => car.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())) : data
 
-    return cars.map(car =>
+    return cars.map((car) =>
     (
       <li key={car.id} className="mb-3">
         <div className="box">
