@@ -1,7 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../hooks"
 import { changeName, changeCost, addCar } from "../store"
-import { resetForm } from "../store/actions"
-
 
 export default function CarForm() {
   const { name, cost } = useAppSelector(state => state.form)
@@ -20,7 +18,6 @@ export default function CarForm() {
     e.preventDefault()
     const car = { name, cost }
     dispatch(addCar(car))
-    dispatch(resetForm())
   }
 
   return (
